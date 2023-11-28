@@ -52,6 +52,7 @@ try:
     logging.getLogger().setLevel(logging.getLevelName(main_conf["log_verbosity"]))
 
     hubitatConnector = Hubitat(config["hubitat"])
+    hubitatConnector.get_all_devices()
     mapper = Mapper(config["mapper"], hubitatConnector)
     owntracksConnector = Owntracks(config["owntracks"], mapper)
 
