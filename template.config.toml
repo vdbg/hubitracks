@@ -1,0 +1,31 @@
+
+[owntracks]
+host = "localhost"  # MQTT host.
+port = 1883         # MQTT broken port. 1883 is the default.
+user = "MQTT user"  # user that has read access to the owntracks MQTT topic
+password = "passwd" # Strong password recommended
+keepalive = 60      # In seconds.
+
+# Connection info to the Hubitat hub.
+# Note: the device running the script and the hubitat hub need to be on the same LAN
+[hubitat]
+url = 'http://ipaddress/'               # What you type in the browser to log on to Hubitat.
+appid = 123                             # Log in to Hubitat, go in Apps, Maker API. The Id in is in the url.
+token = 'enter your hubitat token here' # Log in to Hubitat, go in Apps, Maker API, The token is in the examples. 
+
+[main]
+log_verbosity = "INFO" # By increasing level of verbosity = FATAL, ERROR, WARNING, INFO, DEBUG.
+
+# Maps user/device entering/exiting a given waypoint to a hubitat virtual presence device arriving/departing
+[[mapper]]
+user = "user1"
+device = "device1"
+waypoint = "waypoint1"
+hubitatId = 123
+
+# Second mapping. There can be any number of these
+[[mapper]]
+user = "user2"
+device = "device2"
+waypoint = "waypoint1"
+hubitatId = 456
