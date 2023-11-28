@@ -33,7 +33,7 @@ class Owntracks:
         client.subscribe("owntracks/+/+/event")
 
     # Callback for when a publish message is received from the broker
-    def on_message(self, userdata, msg):
+    def on_message(self, client, userdata, msg):
         topic = msg.topic
 
         try:
