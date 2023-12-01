@@ -37,13 +37,14 @@ class Owntracks:
         topic = msg.topic
 
         try:
-            data = json.loads(str(msg.payload))
+            data = json.loads(msg.payload)
+            logging.debug(f"Payload received: {data}")
             event = data['event'] # enter/leave
             waypoint = data['desc'] # Name of the waypoint
             user_device = topic.split("/") # owntracks/<user>/<device>/event
             user = user_device[1]
             device = user_device[2]
-            self._mapper.map(user, device, waypoint, event == 'enter')
-            logging.debug(data)
-        except:
-            logging.error(f"Cannot decode data on topic {topic}")
+            tid = data['tid']
+            self._mapper.map(user, device, tid, waypoint, event == 'enter')
+        except Exception as e:
+            logging.error(f"Cannot decode data on topic {topic} payload {msg.payload}: {e}")

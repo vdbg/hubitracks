@@ -16,10 +16,14 @@ token = 'enter your hubitat token here' # Log in to Hubitat, go in Apps, Maker A
 [main]
 log_verbosity = "INFO" # By increasing level of verbosity = FATAL, ERROR, WARNING, INFO, DEBUG.
 
-# Maps user/device entering/exiting a given waypoint to a hubitat virtual presence device arriving/departing
+# Maps user/device/tid entering/exiting a given waypoint to a hubitat virtual presence device arriving/departing
+# In the Android Owntracks app, 
+# - Waypoints are configured under Regions
+# - user, device, tid can be found under Preferences/Configuration Management
 [[mapper]]
 user = "user1"
 device = "device1"
+tid = "tid1"
 waypoint = "waypoint1"
 hubitatId = 123
 
@@ -27,5 +31,6 @@ hubitatId = 123
 [[mapper]]
 user = "user2"
 device = "device2"
+tid = "tid2"
 waypoint = "waypoint1"
 hubitatId = 456
