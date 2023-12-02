@@ -1,6 +1,16 @@
 import logging
 from hubitat import Hubitat
 
+class Mapping:
+    def __init__(self, user: str, device: str, tid: str, waypoint: str) -> None:
+        self.user = user
+        self.device = device
+        self.tid = tid
+        self.waypoint = waypoint
+
+    def __repr__(self) -> str:
+        return f"user={self.user}, device={self.device}, tid={self.tid}, waypoint={self.waypoint}"
+
 # Maps a device/user/tid to a Hubitat device Id
 class Mapper:
 
@@ -8,7 +18,8 @@ class Mapper:
         self._hubitat = hubitat
         self._mapping: dict[str, int] = dict()
         for entry in conf:
-            key = self.get_key(entry['user'], entry['device'], entry['tid'], entry['waypoint'])
+            mapping = Mapping(entry['user'], entry['device'], entry['tid'], entry['waypoint'])
+            key = str(mapping)
             value = int(entry['hubitatId'])
             if hubitat.has_device(value):
                 logging.debug(f"Mapping Owntracks {key} to Hubitat {value}")
@@ -16,14 +27,12 @@ class Mapper:
             else:
                 logging.warn(f"Cannot map Owntracks {key} to Hubitat {value} as device not exposed to MakerAPI")    
 
-    def get_key(self, user: str, device: str, tid: str, waypoint: str) -> str:
-        return f"{user}--{device}--{tid}--{waypoint}"
-
-    def map(self, user: str, device: str, tid: str, waypoint: str, arrived: bool) -> None:
-        id: int = self._mapping.get(self.get_key(user, device, tid, waypoint), 0)
+    def map(self, m: Mapping, arrived: bool) -> None:
+        key: str = str(m)
+        id: int = self._mapping.get(k, 0)
         if id:
-            logging.info(f"Setting hubitat id {id} to {'arrived' if arrived else 'departed'} for user={user}, device={device}, tid={tid}, waypoint={waypoint}")
+            logging.info(f"Setting hubitat id {id} to {'arrived' if arrived else 'departed'} for {key}")
             self._hubitat.set_presence(id, arrived)
         else:
-            logging.warn(f"No matching hubitat device for user={user}, device={device}, tid={tid}, waypoint={waypoint}")
+            logging.warn(f"No matching hubitat device for user={key}")
 

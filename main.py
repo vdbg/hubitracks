@@ -37,7 +37,7 @@ def get_config():
 
 
 SUPPORTED_PYTHON_MAJOR = 3
-SUPPORTED_PYTHON_MINOR = 11
+SUPPORTED_PYTHON_MINOR = 8
 
 if sys.version_info < (SUPPORTED_PYTHON_MAJOR, SUPPORTED_PYTHON_MINOR):
     raise Exception(

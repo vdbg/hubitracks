@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt  # https://pypi.org/project/paho-mqtt/
 import json
 import logging
 from hubitat import Hubitat
-from mapper import Mapper
+from mapper import Mapper, Mapping
 
 # Payloads and topic paths documented in https://owntracks.org/booklet/tech/json/
 class Owntracks:
@@ -45,6 +45,7 @@ class Owntracks:
             user = user_device[1]
             device = user_device[2]
             tid = data['tid']
-            self._mapper.map(user, device, tid, waypoint, event == 'enter')
+            m = Mapping(user, device, tid, waypoint)
+            self._mapper.map(m, event == 'enter')
         except Exception as e:
             logging.error(f"Cannot decode data on topic {topic} payload {msg.payload}: {e}")
