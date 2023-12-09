@@ -29,10 +29,10 @@ class Mapper:
 
     def map(self, m: Mapping, arrived: bool) -> None:
         key: str = str(m)
-        id: int = self._mapping.get(k, 0)
+        id: int = self._mapping.get(key, 0)
         if id:
             logging.info(f"Setting hubitat id {id} to {'arrived' if arrived else 'departed'} for {key}")
             self._hubitat.set_presence(id, arrived)
         else:
-            logging.warn(f"No matching hubitat device for user={key}")
+            logging.warn(f"No matching hubitat device for {key}")
 
